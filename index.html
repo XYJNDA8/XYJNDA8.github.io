@@ -278,9 +278,13 @@
         border-radius: 999px; padding: 1px 10px; white-space: nowrap;
       }
       .chain-pct:empty { display: none; }
+      .chain-vol-label {
+        font-size: 12.5px; font-weight: 500; color: var(--ink-3);
+        line-height: 1.5; margin-top: 6px; letter-spacing: .04em;
+      }
       .chain-vol {
         font-family: "Noto Serif SC", serif; font-weight: 900;
-        font-size: 26px; line-height: 1.3; margin-top: 2px;
+        font-size: 26px; line-height: 1.3; margin-top: 0;
       }
       .chain-launch { font-size: 13px; color: var(--ink-2); line-height: 1.6; margin: 2px 0 0; }
       .chain-launch:empty { display: none; }
@@ -802,6 +806,7 @@
             <span class="chain-name">SOL<span class="chain-date" data-role="date"></span></span>
             <span class="chain-pct" data-role="pct"></span>
           </div>
+          <div class="chain-vol-label">昨日交易量</div>
           <div class="chain-vol" data-role="vol">加载中…</div>
           <p class="chain-launch" data-role="launch"></p>
         </div>
@@ -811,6 +816,7 @@
             <span class="chain-name">BSC<span class="chain-date" data-role="date"></span></span>
             <span class="chain-pct" data-role="pct"></span>
           </div>
+          <div class="chain-vol-label">昨日交易量</div>
           <div class="chain-vol" data-role="vol">加载中…</div>
           <p class="chain-launch" data-role="launch"></p>
         </div>
@@ -820,6 +826,7 @@
             <span class="chain-name">Robinhood<span class="chain-date" data-role="date"></span></span>
             <span class="chain-pct" data-role="pct"></span>
           </div>
+          <div class="chain-vol-label">昨日交易量</div>
           <div class="chain-vol" data-role="vol">加载中…</div>
           <p class="chain-launch" data-role="launch"></p>
         </div>
@@ -6498,31 +6505,48 @@
           var n = new Date();
           return chainDayStr(Math.floor(Date.UTC(n.getUTCFullYear(), n.getUTCMonth(), n.getUTCDate() - daysAgo) / 1000));
         }
-        /* 发射台费用：从费用总览的 protocols 数组里只留 category 为 Launchpad 的条目（排除 Binance Alpha），
-           Pons V1 / V2 合并成一条，按 24h 费用（total24h）降序取前 2 条；金额按「万」美元显示 */
+        /* 发射台费用：固定名单，不按费用排名、不显示名单外条目。
+           从费用总览的 protocols 数组里只在 category 为 Launchpad 的条目里按名匹配：
+           Solana 只取 pump.fun；BSC 只取 Flap（接口名 "Flap sh"）与 four.meme；
+           Robinhood 只取 Pons（"Pons V1" + "Pons V2" 合并相加）。
+           名单里缺失或为 0 的跳过，全缺时整行隐藏；金额按「万」美元显示 */
+        var CHAIN_LAUNCH_LIST = {
+          "Solana": [
+            { display: "pump.fun", names: ["pump.fun"] }
+          ],
+          "BSC": [
+            { display: "Flap", names: ["Flap sh", "Flap"] },
+            { display: "four.meme", names: ["four.meme"] }
+          ],
+          "Robinhood": [
+            { display: "Pons", names: ["Pons V1", "Pons V2"] }
+          ]
+        };
         function chainWan(v) {
           var w = v / 1e4;
           return w >= 10 ? "$" + Math.round(w) + "万" : "$" + w.toFixed(1) + "万";
         }
-        function chainFeeName(name) {
-          if (name === "Flap sh") return "Flap";
-          if (name === "BONK.fun Launchpad") return "BONK.fun";
-          return name;
-        }
-        function chainLaunchFees(data) {
-          var merged = {}, order = [];
+        function chainLaunchFees(data, chainApi) {
+          var list = CHAIN_LAUNCH_LIST[chainApi] || [];
+          if (!list.length) return [];
+          var totals = {};
           (data.protocols || []).forEach(function (p) {
             if (!p || p.category !== "Launchpad") return;
-            if (p.name === "Binance Alpha") return;
             var v = p.total24h;
             if (!v || v <= 0) return;
-            var key = (p.name === "Pons V1" || p.name === "Pons V2") ? "Pons" : chainFeeName(p.name);
-            if (!merged[key]) { merged[key] = 0; order.push(key); }
-            merged[key] += v;
+            for (var i = 0; i < list.length; i++) {
+              if (list[i].names.indexOf(p.name) !== -1) {
+                totals[list[i].display] = (totals[list[i].display] || 0) + v;
+                break;
+              }
+            }
           });
-          var items = order.map(function (k) { return { name: k, v: merged[k] }; });
-          items.sort(function (a, b) { return b.v - a.v; });
-          return items.slice(0, 2).map(function (it) { return it.name + " " + chainWan(it.v); });
+          var out = [];
+          list.forEach(function (it) {
+            var v = totals[it.display];
+            if (v && v > 0) out.push(it.display + " " + chainWan(v));
+          });
+          return out;
         }
         function chainRenderFees(card, items) {
           var launch = card.querySelector('[data-role="launch"]');
@@ -6633,7 +6657,7 @@
                 return r.json();
               })
               .then(function (data) {
-                try { chainRenderFees(card, chainLaunchFees(data)); }
+                try { chainRenderFees(card, chainLaunchFees(data, c.api)); }
                 catch (e) { chainRenderFees(card, null); }
               })
               .catch(function () { chainRenderFees(card, null); });
