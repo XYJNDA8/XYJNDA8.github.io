@@ -254,6 +254,40 @@
       .ex-grid .ref-go { display: none; }
       .ex-grid .copy-btn { justify-content: center; width: 100%; margin-left: 0; padding: 6px 8px; font-size: 13px; }
 
+      /* ---------- 三链日报：卡片沿用站内 surface / 阴影 / 16px 圆角 ---------- */
+      .chain-updated {
+        text-align: center; font-size: 13px; color: var(--ink-3);
+        margin: -8px 0 14px; font-family: "IBM Plex Mono", monospace;
+      }
+      .chain-card {
+        background: var(--surface);
+        border-radius: 16px;
+        box-shadow: var(--card-shadow);
+        padding: 16px 18px;
+        margin-bottom: 14px;
+      }
+      .chain-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+      .chain-name { font-size: 16.5px; font-weight: 700; line-height: 1.35; }
+      .chain-date {
+        font-size: 12.5px; font-weight: 400; color: var(--ink-3);
+        font-family: "IBM Plex Mono", monospace; margin-left: 8px;
+      }
+      .chain-pct {
+        flex: 0 0 auto; background: var(--accent-soft); color: var(--accent);
+        font-size: 12.5px; font-weight: 700; line-height: 1.6;
+        border-radius: 999px; padding: 1px 10px; white-space: nowrap;
+      }
+      .chain-pct:empty { display: none; }
+      .chain-vol {
+        font-family: "Noto Serif SC", serif; font-weight: 900;
+        font-size: 30px; line-height: 1.3; margin-top: 6px;
+      }
+      .chain-detail { font-size: 13px; color: var(--ink-2); line-height: 1.6; margin: 4px 0 0; }
+      .chain-detail:empty { display: none; }
+      .chain-peak { font-size: 12.5px; color: var(--ink-3); line-height: 1.6; margin: 2px 0 0; }
+      .chain-peak:empty { display: none; }
+      .chain-warn { font-size: 12.5px; color: var(--ink-2); line-height: 1.6; margin: 6px 0 0; }
+
       /* ---------- Motion（#074 / #081 / #085 / #095 / #096 / #153） ---------- */
       @keyframes bg-flow {
         0% { background-position: 0% 50%; }
@@ -761,6 +795,47 @@
         </a>
       </section>
 
+      <!-- ===== 三链日报：打开页面时由浏览器现拉 DefiLlama 并按脚本同口径计算 ===== -->
+      <section id="chain-report" aria-labelledby="h-chain">
+        <h2 class="sec-title" id="h-chain">三链日报</h2>
+        <p class="chain-updated" id="chainUpdated">更新于 —（北京时间）</p>
+
+        <div class="chain-card reveal" style="--d:0s" data-chain="Solana">
+          <div class="chain-head">
+            <span class="chain-name">SOL<span class="chain-date" data-role="date"></span></span>
+            <span class="chain-pct" data-role="pct"></span>
+          </div>
+          <div class="chain-vol" data-role="vol">加载中…</div>
+          <p class="chain-detail" data-role="detail"></p>
+          <p class="chain-peak" data-role="peak"></p>
+          <div data-role="warns"></div>
+        </div>
+
+        <div class="chain-card reveal" style="--d:.15s" data-chain="BSC">
+          <div class="chain-head">
+            <span class="chain-name">BSC<span class="chain-date" data-role="date"></span></span>
+            <span class="chain-pct" data-role="pct"></span>
+          </div>
+          <div class="chain-vol" data-role="vol">加载中…</div>
+          <p class="chain-detail" data-role="detail"></p>
+          <p class="chain-peak" data-role="peak"></p>
+          <div data-role="warns"></div>
+        </div>
+
+        <div class="chain-card reveal" style="--d:.3s" data-chain="Robinhood">
+          <div class="chain-head">
+            <span class="chain-name">Robinhood<span class="chain-date" data-role="date"></span></span>
+            <span class="chain-pct" data-role="pct"></span>
+          </div>
+          <div class="chain-vol" data-role="vol">加载中…</div>
+          <p class="chain-detail" data-role="detail"></p>
+          <p class="chain-peak" data-role="peak"></p>
+          <div data-role="warns"></div>
+        </div>
+
+        <p class="ref-note">数据来源：DefiLlama · UTC 日口径 · DefiLlama 之后可能修正日柱</p>
+      </section>
+
       <!-- ===== Exchange referral links ===== -->
       <section id="exchange-referral" aria-labelledby="h-exchange-referral">
         <h2 class="sec-title" id="h-exchange-referral">交易所返佣</h2>
@@ -973,6 +1048,12 @@
           window.addEventListener("resize", queueSweep);
           setTimeout(sweep, 900);
           setTimeout(sweep, 2500);
+          /* 最终兜底：开页 1.5 秒后把仍没被点亮的卡片全部点亮。
+             页面较长时，靠后的卡片离首屏超过观察器的 600px 提前量，
+             在用户滚到之前会一直停在 opacity:0 的初始状态；
+             这道兜底保证任何卡片都不会永久不可见（代价只是深处卡片的
+             入场动画在视口外播完，用户滚到时看到的是已就位的卡片）。 */
+          setTimeout(function () { els.forEach(show); }, 1500);
         }
 
         var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -6403,6 +6484,161 @@
           fpRoute();
         }
 
+        /* ---------- 三链日报：现拉 DefiLlama，口径与 chain_daily_report.py 完全一致 ----------
+           每条链独立拉取、独立计算、独立渲染：一条失败只坏自己那张卡，
+           不影响板块其他链，更不影响页面其他功能。所有外部数据（协议名等）
+           一律走 textContent 写入，不拼 innerHTML。 */
+        var CHAIN_REPORT = [
+          { api: "Solana", label: "SOL" },
+          { api: "BSC", label: "BSC" },
+          { api: "Robinhood", label: "Robinhood" }
+        ];
+        var CHAIN_PEAK_MONTH = "2026-09";
+
+        function chainYi(v) { return "$" + (v / 1e8).toFixed(2) + " 亿"; }
+        function chainDayStr(ts) {
+          var d = new Date(ts * 1000);
+          var m = d.getUTCMonth() + 1, day = d.getUTCDate();
+          return d.getUTCFullYear() + "-" + (m < 10 ? "0" : "") + m + "-" + (day < 10 ? "0" : "") + day;
+        }
+        function chainUtcDate(daysAgo) {
+          var n = new Date();
+          return chainDayStr(Math.floor(Date.UTC(n.getUTCFullYear(), n.getUTCMonth(), n.getUTCDate() - daysAgo) / 1000));
+        }
+        function chainAnalyze(data) {
+          var bars = {}, breakdown = {}, i;
+          var chart = data.totalDataChart || [];
+          for (i = 0; i < chart.length; i++) bars[chainDayStr(chart[i][0])] = chart[i][1];
+          var bd = data.totalDataChartBreakdown || [];
+          for (i = 0; i < bd.length; i++) {
+            var flat = {}, m = bd[i][1] || {};
+            for (var proto in m) {
+              if (!Object.prototype.hasOwnProperty.call(m, proto)) continue;
+              var v = m[proto];
+              if (v !== null && typeof v === "object") {
+                var s = 0;
+                for (var k in v) { if (Object.prototype.hasOwnProperty.call(v, k)) s += v[k]; }
+                flat[proto] = s;
+              } else { flat[proto] = v; }
+            }
+            breakdown[chainDayStr(bd[i][0])] = flat;
+          }
+          var yday = chainUtcDate(1), dbefore = chainUtcDate(2), tday = chainUtcDate(0);
+          var barY = bars[yday], barB = bars[dbefore], barT = bars[tday];
+          var roll24 = data.total24h;
+          var warnings = [];
+          if (barY === undefined || barY === null) {
+            return { missing: true, yday: yday, warnings: warnings };
+          }
+          /* 核对一：昨日日柱半成品 → 可信量改用滚动 24 小时 */
+          var incomplete = false;
+          if (barT !== undefined && barT !== null && barT > barY) {
+            incomplete = true;
+            warnings.push("今日未走完的日柱已超过昨日整根日柱 → 昨日日柱是半成品");
+          }
+          if (roll24 && barY < roll24 * 0.7) {
+            incomplete = true;
+            warnings.push("昨日日柱 " + chainYi(barY) + " 不到滚动 24 小时 " + chainYi(roll24) + " 的七成 → 昨日日柱疑似未汇总完");
+          }
+          /* 核对三（数值卡住，只警告）与核对二（单协议暴涨，剔除）：阈值与脚本一致 */
+          var bdY = breakdown[yday] || {}, bdB = breakdown[dbefore] || {}, bdT = breakdown[tday] || {};
+          var suspectSum = 0;
+          for (var p in bdY) {
+            if (!Object.prototype.hasOwnProperty.call(bdY, p)) continue;
+            var vY = bdY[p], vB = bdB[p] || 0, vT = bdT[p];
+            if (vT !== undefined && vY >= barY * 0.1 && Math.abs(vT - vY) < 1) {
+              warnings.push(p + " 昨日与今日数值一字不差（" + chainYi(vY) + "），疑似数据卡住，该值存疑");
+            }
+            if (vB > 0 && vY >= barY * 0.25 && vY > vB * 5 && (vY - vB) > 1e8) {
+              suspectSum += vY;
+              warnings.push(p + " 一天从 " + chainYi(vB) + " 暴涨到 " + chainYi(vY) + "，一家占全链 " + Math.round(vY / barY * 100) + "%，疑似脏数据，已剔除");
+            }
+          }
+          var trusted, trustedNote;
+          if (incomplete && roll24) {
+            trusted = roll24;
+            trustedNote = "滚动 24 小时（日柱未汇总完，先用这个，确切日量待补齐）";
+          } else if (suspectSum > 0) {
+            trusted = barY - suspectSum;
+            trustedNote = "昨日日柱剔除异常协议后";
+          } else {
+            trusted = barY;
+            trustedNote = "昨日日柱";
+          }
+          var peakDay = null, peakVal = 0;
+          for (var d in bars) {
+            if (!Object.prototype.hasOwnProperty.call(bars, d)) continue;
+            if (d.indexOf(CHAIN_PEAK_MONTH) === 0 && bars[d] > peakVal) { peakDay = d; peakVal = bars[d]; }
+          }
+          return {
+            missing: false, yday: yday, trusted: trusted, trustedNote: trustedNote,
+            barY: barY, barB: barB, roll24: roll24, warnings: warnings,
+            peakDay: peakDay, peakVal: peakVal,
+            pct: peakVal ? Math.round(trusted / peakVal * 100) : null
+          };
+        }
+        function chainRender(card, res) {
+          var vol = card.querySelector('[data-role="vol"]');
+          var pct = card.querySelector('[data-role="pct"]');
+          var date = card.querySelector('[data-role="date"]');
+          var detail = card.querySelector('[data-role="detail"]');
+          var peak = card.querySelector('[data-role="peak"]');
+          var warns = card.querySelector('[data-role="warns"]');
+          if (date) date.textContent = "昨日 " + res.yday;
+          warns.innerHTML = "";
+          if (res.missing) {
+            vol.textContent = "暂无数据";
+            pct.textContent = "";
+            detail.textContent = "昨日（" + res.yday + "，UTC）日柱还没出来，稍后再看。";
+            peak.textContent = "";
+            return;
+          }
+          vol.textContent = chainYi(res.trusted);
+          pct.textContent = res.pct !== null ? "约 9 月峰值的 " + res.pct + "%" : "";
+          detail.textContent = "口径：" + res.trustedNote + "；日柱 " + chainYi(res.barY) + "，滚动 24h " + (res.roll24 ? chainYi(res.roll24) : "无") + "，前日 " + (res.barB ? chainYi(res.barB) : "无");
+          peak.textContent = res.peakVal ? (CHAIN_PEAK_MONTH + " 峰值：" + res.peakDay + " 的 " + chainYi(res.peakVal)) : "";
+          res.warnings.forEach(function (w) {
+            var el = document.createElement("p");
+            el.className = "chain-warn";
+            el.textContent = "⚠️ " + w;
+            warns.appendChild(el);
+          });
+        }
+        function chainRenderError(card) {
+          var vol = card.querySelector('[data-role="vol"]');
+          var detail = card.querySelector('[data-role="detail"]');
+          if (vol) vol.textContent = "数据暂时拉不到";
+          if (detail) detail.textContent = "这条链的数据暂时拉不到，稍后再打开页面试试。";
+        }
+        function initChainReport() {
+          var upd = $("chainUpdated");
+          if (upd) {
+            try {
+              var parts = new Intl.DateTimeFormat("zh-CN", { timeZone: "Asia/Shanghai", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hour12: false }).formatToParts(new Date());
+              var o = {};
+              parts.forEach(function (pt) { o[pt.type] = pt.value; });
+              upd.textContent = "更新于 " + o.year + "-" + o.month + "-" + o.day + " " + o.hour + ":" + o.minute + "（北京时间）";
+            } catch (e) {
+              upd.textContent = "更新于 " + new Date().toLocaleString("zh-CN") + "（北京时间）";
+            }
+          }
+          CHAIN_REPORT.forEach(function (c) {
+            var card = document.querySelector('[data-chain="' + c.api + '"]');
+            if (!card) return;
+            if (!window.fetch) { chainRenderError(card); return; }
+            window.fetch("https://api.llama.fi/overview/dexs/" + encodeURIComponent(c.api) + "?dataType=dailyVolume")
+              .then(function (r) {
+                if (!r.ok) throw new Error("http " + r.status);
+                return r.json();
+              })
+              .then(function (data) {
+                try { chainRender(card, chainAnalyze(data)); }
+                catch (e) { chainRenderError(card); }
+              })
+              .catch(function () { chainRenderError(card); });
+          });
+        }
+
         /* 每个初始化各自兜底：任何一个动效出问题，都不能连累卡片显示和合集打开 */
         function safeInit(fn) { try { fn(); } catch (e) { /* 静默跳过坏掉的单个动效 */ } }
         safeInit(initReveal);
@@ -6411,6 +6647,7 @@
         safeInit(initTilt);
         safeInit(initThemeToggle);
         safeInit(initFupan);
+        safeInit(initChainReport);
       })();
     </script>
   </body>
