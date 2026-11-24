@@ -263,8 +263,8 @@
         background: var(--surface);
         border-radius: 16px;
         box-shadow: var(--card-shadow);
-        padding: 16px 18px;
-        margin-bottom: 14px;
+        padding: 12px 16px;
+        margin-bottom: 10px;
       }
       .chain-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
       .chain-name { font-size: 16.5px; font-weight: 700; line-height: 1.35; }
@@ -280,13 +280,10 @@
       .chain-pct:empty { display: none; }
       .chain-vol {
         font-family: "Noto Serif SC", serif; font-weight: 900;
-        font-size: 30px; line-height: 1.3; margin-top: 6px;
+        font-size: 26px; line-height: 1.3; margin-top: 2px;
       }
-      .chain-detail { font-size: 13px; color: var(--ink-2); line-height: 1.6; margin: 4px 0 0; }
-      .chain-detail:empty { display: none; }
-      .chain-peak { font-size: 12.5px; color: var(--ink-3); line-height: 1.6; margin: 2px 0 0; }
-      .chain-peak:empty { display: none; }
-      .chain-warn { font-size: 12.5px; color: var(--ink-2); line-height: 1.6; margin: 6px 0 0; }
+      .chain-launch { font-size: 13px; color: var(--ink-2); line-height: 1.6; margin: 2px 0 0; }
+      .chain-launch:empty { display: none; }
 
       /* ---------- Motion（#074 / #081 / #085 / #095 / #096 / #153） ---------- */
       @keyframes bg-flow {
@@ -795,7 +792,7 @@
         </a>
       </section>
 
-      <!-- ===== 三链日报：打开页面时由浏览器现拉 DefiLlama 并按脚本同口径计算 ===== -->
+      <!-- ===== 三链日报：打开页面时由浏览器现拉 DefiLlama 现算 ===== -->
       <section id="chain-report" aria-labelledby="h-chain">
         <h2 class="sec-title" id="h-chain">三链日报</h2>
         <p class="chain-updated" id="chainUpdated">更新于 —（北京时间）</p>
@@ -806,9 +803,7 @@
             <span class="chain-pct" data-role="pct"></span>
           </div>
           <div class="chain-vol" data-role="vol">加载中…</div>
-          <p class="chain-detail" data-role="detail"></p>
-          <p class="chain-peak" data-role="peak"></p>
-          <div data-role="warns"></div>
+          <p class="chain-launch" data-role="launch"></p>
         </div>
 
         <div class="chain-card reveal" style="--d:.15s" data-chain="BSC">
@@ -817,9 +812,7 @@
             <span class="chain-pct" data-role="pct"></span>
           </div>
           <div class="chain-vol" data-role="vol">加载中…</div>
-          <p class="chain-detail" data-role="detail"></p>
-          <p class="chain-peak" data-role="peak"></p>
-          <div data-role="warns"></div>
+          <p class="chain-launch" data-role="launch"></p>
         </div>
 
         <div class="chain-card reveal" style="--d:.3s" data-chain="Robinhood">
@@ -828,12 +821,10 @@
             <span class="chain-pct" data-role="pct"></span>
           </div>
           <div class="chain-vol" data-role="vol">加载中…</div>
-          <p class="chain-detail" data-role="detail"></p>
-          <p class="chain-peak" data-role="peak"></p>
-          <div data-role="warns"></div>
+          <p class="chain-launch" data-role="launch"></p>
         </div>
 
-        <p class="ref-note">数据来源：DefiLlama · UTC 日口径 · DefiLlama 之后可能修正日柱</p>
+        <p class="ref-note">数据来源：DefiLlama</p>
       </section>
 
       <!-- ===== Exchange referral links ===== -->
@@ -1046,14 +1037,15 @@
           }
           window.addEventListener("scroll", queueSweep, { passive: true });
           window.addEventListener("resize", queueSweep);
+          sweep();
           setTimeout(sweep, 900);
           setTimeout(sweep, 2500);
-          /* 最终兜底：开页 1.5 秒后把仍没被点亮的卡片全部点亮。
+          /* 最终兜底：开页 0.4 秒后把仍没被点亮的卡片全部点亮。
              页面较长时，靠后的卡片离首屏超过观察器的 600px 提前量，
              在用户滚到之前会一直停在 opacity:0 的初始状态；
-             这道兜底保证任何卡片都不会永久不可见（代价只是深处卡片的
-             入场动画在视口外播完，用户滚到时看到的是已就位的卡片）。 */
-          setTimeout(function () { els.forEach(show); }, 1500);
+             这道兜底保证任何卡片都不会长时间不可见、不可点（代价只是
+             深处卡片的入场动画在视口外播完，用户滚到时看到的是已就位的卡片）。 */
+          setTimeout(function () { els.forEach(show); }, 400);
         }
 
         var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -6484,14 +6476,14 @@
           fpRoute();
         }
 
-        /* ---------- 三链日报：现拉 DefiLlama，口径与 chain_daily_report.py 完全一致 ----------
-           每条链独立拉取、独立计算、独立渲染：一条失败只坏自己那张卡，
-           不影响板块其他链，更不影响页面其他功能。所有外部数据（协议名等）
-           一律走 textContent 写入，不拼 innerHTML。 */
+        /* ---------- 三链日报：现拉 DefiLlama，只呈现三样：昨日总量、9 月峰值占比、主要发射台 24h 量 ----------
+           每条链独立拉取、独立计算、独立渲染：一条失败只坏自己那张卡，不影响其他卡片和页面。
+           可信量仍按原来的三道核对在后台算（日柱完整性、单协议异常剔除、数值卡住标记），
+           页面只显示算完的结果，不显示核对过程。外部数据一律走 textContent 写入。 */
         var CHAIN_REPORT = [
-          { api: "Solana", label: "SOL" },
-          { api: "BSC", label: "BSC" },
-          { api: "Robinhood", label: "Robinhood" }
+          { api: "Solana", label: "SOL", launchpads: [ { name: "pump.fun", label: "pump.fun" }, { name: "PumpSwap", label: "PumpSwap" } ] },
+          { api: "BSC", label: "BSC", launchpads: [ { name: "Flap sh", label: "Flap" }, { name: "four.meme", label: "four.meme" } ] },
+          { api: "Robinhood", label: "Robinhood", launchpads: [ { name: "Pons V2", label: "Pons" }, { name: "Frontier", label: "Frontier" } ] }
         ];
         var CHAIN_PEAK_MONTH = "2026-09";
 
@@ -6505,7 +6497,22 @@
           var n = new Date();
           return chainDayStr(Math.floor(Date.UTC(n.getUTCFullYear(), n.getUTCMonth(), n.getUTCDate() - daysAgo) / 1000));
         }
-        function chainAnalyze(data) {
+        /* 发射台：从同一份响应的 protocols 数组按名字精确匹配，取 total24h；找不到或为 0 就跳过 */
+        function chainLaunchpads(data, defs) {
+          var out = [];
+          var protos = data.protocols || [];
+          (defs || []).forEach(function (d) {
+            for (var i = 0; i < protos.length; i++) {
+              if (protos[i].name === d.name) {
+                var v = protos[i].total24h;
+                if (v && v > 0) out.push(d.label + " " + chainYi(v));
+                break;
+              }
+            }
+          });
+          return out;
+        }
+        function chainAnalyze(data, launchDefs) {
           var bars = {}, breakdown = {}, i;
           var chart = data.totalDataChart || [];
           for (i = 0; i < chart.length; i++) bars[chainDayStr(chart[i][0])] = chart[i][1];
@@ -6523,56 +6530,37 @@
             }
             breakdown[chainDayStr(bd[i][0])] = flat;
           }
+          var launch = chainLaunchpads(data, launchDefs);
           var yday = chainUtcDate(1), dbefore = chainUtcDate(2), tday = chainUtcDate(0);
           var barY = bars[yday], barB = bars[dbefore], barT = bars[tday];
           var roll24 = data.total24h;
-          var warnings = [];
           if (barY === undefined || barY === null) {
-            return { missing: true, yday: yday, warnings: warnings };
+            return { missing: true, yday: yday, launch: launch };
           }
-          /* 核对一：昨日日柱半成品 → 可信量改用滚动 24 小时 */
+          /* 核对一（后台）：昨日日柱不完整 → 可信量改用滚动 24 小时 */
           var incomplete = false;
-          if (barT !== undefined && barT !== null && barT > barY) {
-            incomplete = true;
-            warnings.push("今日未走完的日柱已超过昨日整根日柱 → 昨日日柱是半成品");
-          }
-          if (roll24 && barY < roll24 * 0.7) {
-            incomplete = true;
-            warnings.push("昨日日柱 " + chainYi(barY) + " 不到滚动 24 小时 " + chainYi(roll24) + " 的七成 → 昨日日柱疑似未汇总完");
-          }
-          /* 核对三（数值卡住，只警告）与核对二（单协议暴涨，剔除）：阈值与脚本一致 */
+          if (barT !== undefined && barT !== null && barT > barY) incomplete = true;
+          if (roll24 && barY < roll24 * 0.7) incomplete = true;
+          /* 核对二（后台）：单协议异常暴涨 → 从可信量中剔除；核对三（数值卡住）只作内部标记，不影响可信量 */
           var bdY = breakdown[yday] || {}, bdB = breakdown[dbefore] || {}, bdT = breakdown[tday] || {};
           var suspectSum = 0;
           for (var p in bdY) {
             if (!Object.prototype.hasOwnProperty.call(bdY, p)) continue;
             var vY = bdY[p], vB = bdB[p] || 0, vT = bdT[p];
-            if (vT !== undefined && vY >= barY * 0.1 && Math.abs(vT - vY) < 1) {
-              warnings.push(p + " 昨日与今日数值一字不差（" + chainYi(vY) + "），疑似数据卡住，该值存疑");
-            }
-            if (vB > 0 && vY >= barY * 0.25 && vY > vB * 5 && (vY - vB) > 1e8) {
-              suspectSum += vY;
-              warnings.push(p + " 一天从 " + chainYi(vB) + " 暴涨到 " + chainYi(vY) + "，一家占全链 " + Math.round(vY / barY * 100) + "%，疑似脏数据，已剔除");
-            }
+            if (vT !== undefined && vY >= barY * 0.1 && Math.abs(vT - vY) < 1) { /* 数值卡住：内部标记，不展示 */ }
+            if (vB > 0 && vY >= barY * 0.25 && vY > vB * 5 && (vY - vB) > 1e8) suspectSum += vY;
           }
-          var trusted, trustedNote;
-          if (incomplete && roll24) {
-            trusted = roll24;
-            trustedNote = "滚动 24 小时（日柱未汇总完，先用这个，确切日量待补齐）";
-          } else if (suspectSum > 0) {
-            trusted = barY - suspectSum;
-            trustedNote = "昨日日柱剔除异常协议后";
-          } else {
-            trusted = barY;
-            trustedNote = "昨日日柱";
-          }
+          var trusted;
+          if (incomplete && roll24) trusted = roll24;
+          else if (suspectSum > 0) trusted = barY - suspectSum;
+          else trusted = barY;
           var peakDay = null, peakVal = 0;
           for (var d in bars) {
             if (!Object.prototype.hasOwnProperty.call(bars, d)) continue;
             if (d.indexOf(CHAIN_PEAK_MONTH) === 0 && bars[d] > peakVal) { peakDay = d; peakVal = bars[d]; }
           }
           return {
-            missing: false, yday: yday, trusted: trusted, trustedNote: trustedNote,
-            barY: barY, barB: barB, roll24: roll24, warnings: warnings,
+            missing: false, yday: yday, trusted: trusted, launch: launch,
             peakDay: peakDay, peakVal: peakVal,
             pct: peakVal ? Math.round(trusted / peakVal * 100) : null
           };
@@ -6581,34 +6569,25 @@
           var vol = card.querySelector('[data-role="vol"]');
           var pct = card.querySelector('[data-role="pct"]');
           var date = card.querySelector('[data-role="date"]');
-          var detail = card.querySelector('[data-role="detail"]');
-          var peak = card.querySelector('[data-role="peak"]');
-          var warns = card.querySelector('[data-role="warns"]');
+          var launch = card.querySelector('[data-role="launch"]');
           if (date) date.textContent = "昨日 " + res.yday;
-          warns.innerHTML = "";
           if (res.missing) {
             vol.textContent = "暂无数据";
             pct.textContent = "";
-            detail.textContent = "昨日（" + res.yday + "，UTC）日柱还没出来，稍后再看。";
-            peak.textContent = "";
+            launch.textContent = "";
             return;
           }
           vol.textContent = chainYi(res.trusted);
           pct.textContent = res.pct !== null ? "约 9 月峰值的 " + res.pct + "%" : "";
-          detail.textContent = "口径：" + res.trustedNote + "；日柱 " + chainYi(res.barY) + "，滚动 24h " + (res.roll24 ? chainYi(res.roll24) : "无") + "，前日 " + (res.barB ? chainYi(res.barB) : "无");
-          peak.textContent = res.peakVal ? (CHAIN_PEAK_MONTH + " 峰值：" + res.peakDay + " 的 " + chainYi(res.peakVal)) : "";
-          res.warnings.forEach(function (w) {
-            var el = document.createElement("p");
-            el.className = "chain-warn";
-            el.textContent = "⚠️ " + w;
-            warns.appendChild(el);
-          });
+          launch.textContent = res.launch && res.launch.length ? "发射台 24h：" + res.launch.join(" · ") : "";
         }
         function chainRenderError(card) {
           var vol = card.querySelector('[data-role="vol"]');
-          var detail = card.querySelector('[data-role="detail"]');
+          var pct = card.querySelector('[data-role="pct"]');
+          var launch = card.querySelector('[data-role="launch"]');
           if (vol) vol.textContent = "数据暂时拉不到";
-          if (detail) detail.textContent = "这条链的数据暂时拉不到，稍后再打开页面试试。";
+          if (pct) pct.textContent = "";
+          if (launch) launch.textContent = "";
         }
         function initChainReport() {
           var upd = $("chainUpdated");
@@ -6632,7 +6611,7 @@
                 return r.json();
               })
               .then(function (data) {
-                try { chainRender(card, chainAnalyze(data)); }
+                try { chainRender(card, chainAnalyze(data, c.launchpads)); }
                 catch (e) { chainRenderError(card); }
               })
               .catch(function () { chainRenderError(card); });
