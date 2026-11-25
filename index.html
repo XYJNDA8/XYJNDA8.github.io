@@ -254,41 +254,6 @@
       .ex-grid .ref-go { display: none; }
       .ex-grid .copy-btn { justify-content: center; width: 100%; margin-left: 0; padding: 6px 8px; font-size: 13px; }
 
-      /* ---------- 三链日报：卡片沿用站内 surface / 阴影 / 16px 圆角 ---------- */
-      .chain-updated {
-        text-align: center; font-size: 13px; color: var(--ink-3);
-        margin: -8px 0 14px; font-family: "IBM Plex Mono", monospace;
-      }
-      .chain-card {
-        background: var(--surface);
-        border-radius: 16px;
-        box-shadow: var(--card-shadow);
-        padding: 12px 16px;
-        margin-bottom: 10px;
-      }
-      .chain-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-      .chain-name { font-size: 16.5px; font-weight: 700; line-height: 1.35; }
-      .chain-date {
-        font-size: 12.5px; font-weight: 400; color: var(--ink-3);
-        font-family: "IBM Plex Mono", monospace; margin-left: 8px;
-      }
-      .chain-pct {
-        flex: 0 0 auto; background: var(--accent-soft); color: var(--accent);
-        font-size: 12.5px; font-weight: 700; line-height: 1.6;
-        border-radius: 999px; padding: 1px 10px; white-space: nowrap;
-      }
-      .chain-pct:empty { display: none; }
-      .chain-vol-label {
-        font-size: 12.5px; font-weight: 500; color: var(--ink-3);
-        line-height: 1.5; margin-top: 6px; letter-spacing: .04em;
-      }
-      .chain-vol {
-        font-family: "Noto Serif SC", serif; font-weight: 900;
-        font-size: 26px; line-height: 1.3; margin-top: 0;
-      }
-      .chain-launch { font-size: 13px; color: var(--ink-2); line-height: 1.6; margin: 2px 0 0; }
-      .chain-launch:empty { display: none; }
-
       /* ---------- Motion（#074 / #081 / #085 / #095 / #096 / #153） ---------- */
       @keyframes bg-flow {
         0% { background-position: 0% 50%; }
@@ -790,48 +755,10 @@
           <span class="fp-entry-ic" aria-hidden="true">复</span>
           <span class="fp-entry-text">
             <span class="fp-entry-name">天下英雄如过江之鲫</span>
-            <span class="fp-entry-desc" id="fpEntryDesc">共 25 位大佬 · 186 篇文章，点开按人读。</span>
+            <span class="fp-entry-desc" id="fpEntryDesc">共 26 位大佬 · 187 篇文章，点开按人读。</span>
           </span>
           <span class="ref-go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></span>
         </a>
-      </section>
-
-      <!-- ===== 三链日报：打开页面时由浏览器现拉 DefiLlama 现算 ===== -->
-      <section id="chain-report" aria-labelledby="h-chain">
-        <h2 class="sec-title" id="h-chain">三链日报</h2>
-        <p class="chain-updated" id="chainUpdated">更新于 —（北京时间）</p>
-
-        <div class="chain-card reveal" style="--d:0s" data-chain="Solana">
-          <div class="chain-head">
-            <span class="chain-name">SOL<span class="chain-date" data-role="date"></span></span>
-            <span class="chain-pct" data-role="pct"></span>
-          </div>
-          <div class="chain-vol-label">昨日交易量</div>
-          <div class="chain-vol" data-role="vol">加载中…</div>
-          <p class="chain-launch" data-role="launch"></p>
-        </div>
-
-        <div class="chain-card reveal" style="--d:.15s" data-chain="BSC">
-          <div class="chain-head">
-            <span class="chain-name">BSC<span class="chain-date" data-role="date"></span></span>
-            <span class="chain-pct" data-role="pct"></span>
-          </div>
-          <div class="chain-vol-label">昨日交易量</div>
-          <div class="chain-vol" data-role="vol">加载中…</div>
-          <p class="chain-launch" data-role="launch"></p>
-        </div>
-
-        <div class="chain-card reveal" style="--d:.3s" data-chain="Robinhood">
-          <div class="chain-head">
-            <span class="chain-name">Robinhood<span class="chain-date" data-role="date"></span></span>
-            <span class="chain-pct" data-role="pct"></span>
-          </div>
-          <div class="chain-vol-label">昨日交易量</div>
-          <div class="chain-vol" data-role="vol">加载中…</div>
-          <p class="chain-launch" data-role="launch"></p>
-        </div>
-
-        <p class="ref-note">数据来源：DefiLlama</p>
       </section>
 
       <!-- ===== Exchange referral links ===== -->
@@ -1290,6 +1217,82 @@
            改完保存，刷新页面就能看到。
            ================================================================ */
         var FUPAN_DATA = [
+          {
+            id: "tuishen",
+            name: "退学炒股（退神）",
+            avatar: "assets/3cc7cac75cf0.jpg",
+            bio: "",
+            articles: [
+              {
+                id: "tuishen-wo-he-xiaoming",
+                title: "我和小明",
+                date: "日期缺失",
+                type: "长推",
+                summary: "退学炒股（退神）把交易者内心那个情绪化、贪婪、恐惧、不守纪律的自己称作「小明」——心魔：初中时带他通宵上网，炒股后又回来怂恿他低吸别打板、踏空了催他瞎买、割完肉又怕它涨回去。全文是一篇与心魔的对账：股市只开市四个多小时，盘后不学习的人会被慢慢拉开差距；阻碍进步的三个常见错误是亏了只想加钱、只盯自己的股票、把亏损归咎于外界；行情好时多做、行情差时少做、控制回撤复利增长，道理人人懂、极少人做到，他自评天赋负分——入市三年多空仓的日子累计不超过10天。大幅回撤的成因是连续成功后的自信膨胀：把小概率当成大概率，直到连续失败把信心打回上轮资金的起点，所以控制回撤要么随时保持理性，要么在心理层面提高回撤点。分仓防的是连吃跌停式的连续失败，全仓还是分仓取决于标的的确定性有多大，而高成功率的标的很少出现、每天满仓必然错误；他自问自答了全仓的七个问题（停牌、回撤50%要涨100%才回本、换股打脸、被套后没子弹、跟高手学全仓打板的误解、客观态度、全仓如何毁掉睡眠和生活），结论是坚决半仓操作。投资大忌是贪、急、幻想、优柔寡断；「牛市来了」是短线的毒药——牛市机会多但确定性与牛熊无关。错了就割，操作只有对错、盈利交给市场；了解别人让你知道如何赚钱，了解自己让你知道如何不输钱。",
+                url: "",
+                body:
+                  "说明：小明，就是交易者内心情绪化、贪婪、恐惧、不守纪律的那个自己，是心魔。\n\n" +
+                  "小明，在初中的时候认识他的，他有网瘾，一个礼拜至少去网吧通宵玩三天，后来在他的怂恿之下我也开始跟随他通宵了，晚上去网吧玩白天睡觉，这样的生活状态一直持续到了高三。\n\n" +
+                  "后来很久没有关注他了，直到我炒股之后小明又出现了。恰巧他也非常喜欢股票，而且喜欢让我跟着他干，而跟他干的结果基本上都输，偶尔有一两次赢了但又会马上输回去。我三年多的股票交易生涯一直碌碌无为，很大的一部分原因就是小明。尽管我一点也不愿意见到他，但他总能找到机会跟我交流，现在我给大家揭露一下这人有多么的恶劣，多么的讨人厌。\n\n" +
+                  "小明让我不要打板，他觉得打板被砸开会亏很多，让我低吸，当天涨停就能大赚。\n\n" +
+                  "小明性格懒惰，收盘之后就知道发呆混时间，然后等股票开盘，我真的看不起这样的人。职业股民时间这么多，为什么不好好把握，我自己有计划，要不断学习。我还发现他心态一点都不好，太想赚钱了。\n\n" +
+                  "这几天大涨，小明对我说，别人都赚钱你却踏空了，赶紧去买一个吧。我跟他说，不管其他股涨不涨，没有自己的标的就不买，瞎买一个就会使自己陷入被动，今天复盘做好计划明天出击。\n\n" +
+                  "今天小明的内心很急躁，好像是因为踏空了，好久没有赚钱了，他感觉很着急。其实，为什么着急呢，急是赚不到钱的，反而会使自己丧失理智。\n\n" +
+                  "小明这几天踏空，因为他买的是庄股，买庄股完全是一种赌博行为，因为你把自己是否盈利交给了别人，这种行为具有很大的不确定性。\n\n" +
+                  "不要把心思用在如何省钱上，而得用在如何赚钱上面。\n\n" +
+                  "这几天想了很多，发现我之前的股票都是在乱做，总想着征服市场，把所有的机会都抓住。\n\n" +
+                  "小明有一个难以释怀的东西，就是割完之后它涨了怎么办？\n如果你是按照你的思路去买，也按照你的计划去卖，在你的理论是正确的前提下，是不会出现割完之后上涨的情况，如果有股价上涨，那么必然是出现了一些你不可预知的因素，最常见的就是某个大资金引导股价上升，但这个是你不能掌握的，如果你不割肉赌会有大资金来拉抬股价，万一没有呢，这样持续下去只会套得更多。\n\n" +
+                  "股市每天只开4个多小时，其他时间用去做什么，很多时候都是在打发时间等第二天开盘，但有的人却在利用这段时间不断学习丰富自己，人与人的差距就这样慢慢拉大，十多年的股龄可能都不及别人两年的水平；刚入市的时候可能会觉得还有很多需要学，每天都过得很充实，当过一段时间之后发现股市里没有什么可学的，每天复盘完了就不知道做什么了。但实际是，我懂的只是一点皮毛，各种经济金融理论，各种行业政策发展规划，我都不了解，尽管看这些东西很枯燥，我都希望自己能抽点时间看一看。\n\n" +
+                  "顺时勿骄，逆势勿躁。\n\n" +
+                  "阻碍进步的几个常见错误：\n一、加钱，当一个人大幅亏钱后会有两种选择反思或者加钱，反思是你对自己行为的一种纠正，加钱是你觉得自己的思路是对的只是一时运气不好，然而加再多钱也于事无补；\n二、只盯着自己的股票，没有去感受市场的整体气息，收盘后找一些关于持仓股票的信息来告诉自己是对的；\n三、把自己亏钱的因素归结于外界，比如要是T+0我肯定赚，这个游资不砸盘肯定涨，大盘不跌肯定涨，它涨时没看到不然我肯定买，外界的因素并非只针对自己但每个人的结局都不一样。\n\n" +
+                  "20岁的贪玩，造就了30岁的无奈。30岁的无奈，导致了40岁的无为。40岁的无为，奠定了50岁的失败。50岁的失败，酿造了一辈子的平庸。请不要在该奋斗的年纪选择了安逸，否则，当父母需要你时，除了泪水，你一无所有；当孩子需要你时，除了惭愧，你别无他法；当自己回首过去，除了蹉跎，你还是空无一物。\n\n" +
+                  "空仓，不是靠回避股市，也不是靠限制交易来达成，真正意义上的空仓是处在看着盘打开交易软件随时准备下单的状态中完成。\n\n" +
+                  "人最缺少的一种能力就是去改变自己的能力，人喜欢猜测别人的心理却怎么也弄不明白自己。\n\n" +
+                  "股市中所指的天赋更多为性格，一个理想的性格状态主要包括这几点：\n第一失利时乐观自信，得利时不骄傲自满；\n第二能虚心学习，不断提高自己；\n第三沉着冷静，不会盲目冲动；\n第四好胜心适中，过强则赌性太重，过弱则会失去动力。\n\n" +
+                  "错了就割，千万不要抱有任何幻想，将操作和盈利分别看待，它们两者没有必然联系。操作只有对错，盈利交给市场。\n\n" +
+                  "人生的高度取决于格局的大小，小成可以靠运气或者耍点小聪明来实现，而大成必须是依赖一个人的格局。\n\n" +
+                  "不要去关注别人是否赚钱，难道别人亏钱了你亏钱也是理所当然了吗？\n\n" +
+                  "股市里有一句老生常谈的话，行情好时多做，行情差时少做，控制回撤复利增长。这个道理很多人都知道，可是没有几个人能做到，如果有人刚入市就能做到，那这是他最大的天赋。如果以此为标准给我的天赋打个分，我觉得是负分，入市三年多我空仓的日子累积不超过10天，很多时候我认为是股市不适合我，却从不觉得是我不适合股市。接下来的路很长，长得让我心凉，但我已认定，坚持下去，永远都不会放弃。\n\n" +
+                  "很多人都说要有模式，只做模式。我很困惑，打板的就一定只能打板，接力的只能去接力，低吸的只能去低吸，半路的只能去半路吗？可能连我自己都弄不明白，对于我而言，要的是一个确定性，如果能确定它当天会涨停那我绝对不会在涨停去买了。\n\n" +
+                  "时间一天一天的过去，我感觉到离自己的梦想越来越近了，现在正处在黎明前的黑暗，我不能倒下。我没有工作，没有社保医保，所以我要求自己在成功之前不能病，如果病了我不会去医治，把剩下的钱留给家人，选择自己一个人去死。我很庆幸自己认识了股票，股票让我一直去坚持着自己的梦想，让我的生命更加活得有意义。\n\n" +
+                  "当你还在为错失机会而痛苦不已时，说明你内心还没有做到无我的境界，无我就是屏蔽自己的主观意识情感，达到实事求是的一种状态。正确的操作并不一定会赚钱，但它确是风险最小的做法，如果因为某一次没有赚到钱从而去改变自己的做法，那这往往就会成为亏损的开始。\n\n" +
+                  "为何会有大幅回撤？随机概率由三个部分组成，连续成功、连续失败以及概率匹配段，在股票之中你会经历连续成功，但使你连续成功的是外界因素而非自己，你也会经历连续失败，你也会在这次成功下次失败之间轮动，同样的方式在不同的场景下必然会导致不同的结果，因此选择在高成功率的场景下操作是最佳。但并非所有人都这么理性，当连续成功后自信心会大增，自信是什么？就是把小概率的事件当成是大概率事件，比如在熊市当中你连续赚钱了，会让你产生一种错觉，认为这不是熊市。自信心的消减需要连续失败来完成，连续失败必然会导致回撤，直到你保持理性为止，这个回撤点一般是上轮资金的起点。所以控制回撤有两个方法，一是随时保持理性，二是在心理层面提高回撤点。\n\n" +
+                  "了解别人会让你知道如何赚钱，了解自己会让你知道如何不输钱。\n\n" +
+                  "要学会看别人赚钱。如果一个市场没人能赚钱那必定不会有人再来参与，正是这种赚钱效应的传播才使得不断有人加入，所以必定会有一部分人是赚钱的，在牛市时这部分人占比高在熊市时这部分人占比低，因此不要妄想自己赚钱而别人都亏钱；在市场上能赚钱的有两种人，一种是靠运气，一种是靠能力，运气是不能持续的，因此没必要羡慕，靠能力赚的钱更加不能眼红而应该去学别人的优点，不要去比较自己和别人赚得多还是少，一旦去比较，就会有超越别人的欲望，从而会把一种不确定性的操作从主观上认为可行，这就是赌。\n\n" +
+                  "理性对待他人对股票的看法。有些人买入一个股票后，弱则惶惶不安强则过度期望兴奋，不断去寻找别人关于此股的看法，看到有人说涨时内心感到很舒心，看到有人说跌时则加深焦虑，甚至要和他一辩雌雄从嘴巴上说服他人这个股明天会涨；因此对于他人关于股票的看法，只说涨跌结论的不必关注，因为对自己毫无作用，分析涨跌原因的可以参考，但这一切都得建立在自己保持一个客观态度的前期下。\n\n" +
+                  "空仓等待最佳买点到来。最佳买点应该是确定性最大的买入点，如此下去才是复利，很多人都等不到最佳买点就已经下手了，当它来临时已经没有子弹了，除了懊悔遗憾就没有下文了，甚至没有长一点记性。\n\n" +
+                  "埋没天赋的是懒惰，不要因为一时得利就以为将来可以高枕无忧，市场每天都在变，每天都有要学的东西。\n\n" +
+                  "分仓操作是减少收益还是减少风险？所有的模式都会有成功率，连吃5个跌停再连吃5个涨停后的资金是小于原点的，分仓就是为了防止连续失败后的大幅回撤。它会减少单个票的收益，但不会减少总体收益，因为机会不止一个。\n\n" +
+                  "有没有过这种经历，当你看到某个走势时你内心非常确定它会涨，而经过统计这种情况下买入的成功率非常高，这种感觉就是经验，要做的就是等待这种情况出现时再买，经验越丰富，越会有很多种情况会出现这种感觉，比如前一天巨量烂板次日开盘走强、新龙头卡位、超预期加速板等这些情况买入时成功率是很高的。在刚开始时这种感觉出现的频率会很低，很多人没有耐心等到这种感觉出现时就买了，当感觉来临时已经没钱买入了，结果就错失了对这种感觉的培养。\n\n" +
+                  "我找到了适合自己的持仓方式，设置一个回撤线，资金在回撤线之上则全仓，资金到了回撤线则分仓，回撤线根据资金最高点变动，大概10个点左右的幅度。不少人觉得自己能稳定盈利后辞职在家炒股，结果收益反而不如辞职之前，甚至感到迷茫，这主要是因为无效交易做得。职业之后时间多了，对复盘、信息收集、盯盘会更加充分，可选标的会比之前多了很多，但这些标的很多是有瑕疵的，特别是临盘选股容易一时冲动；另外职业炒股这个身份也会促使人去频繁操作，没有了工作收入对股市盈利预期大幅提高，而要想盈利只能去操作。\n\n" +
+                  "在我越来越接近股市真相的时候，我的睡眠也越来越好，已经很久没有失过眠了，对股票我已经不在担心，现在我开始去理解和体会生活，人和事也变得越来越简单，他们不知道自己为什么要这么做，但却都在做着同样的事。我觉得，世界上没有什么事情是嘴巴搞不定的。\n\n" +
+                  "不应该去过分羡慕那些能把牛股从头拿到尾的人，他们既然能一路持有牛股，那么更有可能一路持有一个下跌的股，因为牛股的个数远远少于下跌的股票；如果有一些人平时能及时换股，而买到牛股后却一路持有，那这类人更不能去羡慕了，羡慕他人则有可能产生模仿的意识，只能去佩服，佩服他人则是从内心认为自己能力不足，做自己能力范围的事不是很重要吗？\n\n" +
+                  "股票技术可以通过一段时间学会，入市一年基本都会懂点，懂了一点心中就有了一个较为确定的买点，如果只买这个点，那么赢钱的几率很大，但是很少有人会做到只买这个点，这个点没出现时就会买入其它不懂的点，接着把赚来的钱给亏掉，这就是回撤。所以性格控制的重要性就显现出来了，你能控制自己只能在这个点买入吗？后面随着技术的深入与扩展，就会出现很多点，不用等太久就会出现了，总体的成功率就高了，这是大部分人都可以做到的。\n\n" +
+                  "投资大忌，贪，急，幻想，优柔寡断。\n贪：总想着一步登天，我想走得越高却摔得会越惨，不管本金再少也要自己一步一个脚印爬上去。\n急：大盘涨时生怕踏空赚不了钱，急急忙忙买进，把自己的纪律抛之脑后。\n幻想：带着浓烈的主观意识，以为市场将会按照自己的想法走，没有达到买入标准就下手了。\n优柔寡断：不尊重客观事实，被其他因素影响自己的判断，越陷越深。\n\n" +
+                  "为什么每次赚钱后都会来一次大亏，不仅仅是只有我这个问题很多人都存在，说明这个问题绝对不是什么偶然。导致这个现象的发生很大原因是因为心态，当一个人成功一次后会增加自信心，连续成功便会自信心爆棚，对自己的判断是百分百认可，绝对不会让自己失去任何赚钱的机会，看好一个股就立马买了，如果买错了但小亏并不会让自己的信心减少多少，只有直到大亏时才会使信心大幅下降，当信心下降后，出手便会非常谨慎，开始不断思考学习。\n\n" +
+                  "既然选择了职业，那就应该要具备职业的基本素质，体现出职业的基本水平，如果连业余的不如那说明很失败。千里之行，始于足下，拒绝空想，立即行动。\n万物皆有命，有的人注定不会成功，失去双手的人注定无法潜泳在水里，失去双眼的人注定无法画出他心中的美景，一个不受控制的心注定无法在股市成功。\n我天生具备了在股市会失败的所有特性，这就是我的命，我不服！从今天开始命运将由我来改写！\n\n" +
+                  "饱暖思淫欲，饥寒起盗心，生活太安逸容易让人忘记自己的理想，所做的事都是由人的基本欲望驱使，吃喝玩乐只为满足基本感官，这是每个人都具有的，也是每个人都可以改变的，但前提是你想要去改变。你做错了可你却不承认自己错了，而是把它看成是一种情怀，你的能力太弱有什么资格谈情怀，不要把情怀作为自己失败的借口，扪心自问，要赚钱还是要情怀？\n\n" +
+                  "遇到任何事情都要保持理智，一颗清醒的头脑比什么都重要，情绪这个东西它不会替你思考后果，如果跟随情绪去做只会让自己陷入被动，有的时候后果不堪设想。\n\n" +
+                  "大概率小收益是以保证本金为首的模式，意味着出手频率减少，短期而言可能收益很低，但以长时间来看不断复利后增长率是很高的，这可能比较适合较大的资金。小概率大收益是以快速增长为首的模式，意味着短期收益很高，这适合小资金实现快速增长，但过程随机性太强，运气不好时可能大幅回撤。\n\n" +
+                  "不要让这次的操作影响你下次的情绪。可能这次操作你做得不够好，内心会沮丧、痛苦、自责、懊恼，出现这些情绪都是很正常的，但此时不能让这些情绪主导你的大脑，因为这些情绪都会影响你下次的判断，当遇到一模一样的情况时你内心会退缩，或许你会为了挽回局面而急于操作，正确的做法是思考你这次做得不够好的原因，下次改进；当你这次操作得好时，你会兴奋，信心大增，遇到事情时你的主观性会更强，你认为对的东西你会更加肯定，这就是典型的盲目自信，只有当你遭遇失败时才会浇灭你的自信心时，但此时资金已经大幅回撤了。所以把每一次操作后的情绪分开，当下一次操作开始时你的情绪应该是要平淡的。\n\n" +
+                  "盈利不分贵贱。赚同样的钱，在牛股上赚的比在普通股票上赚的更有面子，打板赚的比低吸赚的更有成就感，所以有时候会为了买入牛股而放弃自己较为确定的标的，或者为了打板而打板。本质上这些都是一样的都是为了盈利，我们不应拘泥于形式上的区别，盈利不分贵贱。\n\n" +
+                  "懒虽是天性，但人有很强的自我意识支配能力，所以懒是可以主观去改变。\n\n" +
+                  "一是方向问题，如果朝着一个错误的方向用功，那都是徒劳的，所以首先要思考自己的方向是否正确，有一个简单的方法，就是看你这个方向是否有人成功过比率如何，对于普通人来说你不要妄想自己会成为历史上的第一人。\n\n" +
+                  "只要当他有资金时就会想着去操作，从来不会管环境如何，这类人的好胜心太强，这种好胜心源于对自己的高度认可。他们很少去提高自己，觉得自己已经很厉害了，他们只在意事情成败的结果，成功了归因为自己的能力，会让他们更加膨胀，失败了归因为运气不好，然后继续一意孤行。他们很少承认别人比自己优秀，也不愿意相信别人比他们优秀，当遇到一个比他们优秀的人时他们会冷嘲热讽一句，这种欺骗自己的行为只是为了掩饰自己内心的自卑情绪。\n\n" +
+                  "管住手，实际上是控制自己的心，要学会承认自己的不足，要学会看着别人赚钱，要明白世界上自己所能掌握的事很少，最关键的是要明白，你无须要求自己完美，人生仍会精彩。\n\n" +
+                  "我觉得自己的心态已经在进步了，现在不会因为踏空而痛苦，我很喜欢看着别人的股票涨停，很精彩，就像是看一场电影一样。但有的时候自己还是控制不住手，尽管我很谨慎了，但心魔总是会寻找一个机会控制我，让我失去理智，这提醒我任何时候都不能放松警惕。\n\n" +
+                  "我潜意识里还是喜欢全仓一个股，还是喜欢爆赚，还是喜欢去赌，但这不是我乐见的状态，全仓一个股，赚了我会非常高兴，亏了我会非常痛苦，这是对自己的一场精神折磨；半仓操作时，我心态非常平稳，不会过分期望，不会过分担忧，不会过分焦虑，这才是我操作时应该具备的心态，以后坚决半仓操作。\n\n" +
+                  "小目标是短期内且较为容易实现的目标，大目标就是长期后要实现的目标，也可以称之为理想，现在要达到它很难。 在操作中，很多人把小目标的内容变成了大目标，比如一年10倍，一个月50%等，这样就是追求在短期内实现理想，毋庸置疑，这是非常难的，反映到实际操作中就会出现急切的心理，不会放过任何操作的机会。但是作为职业炒股者，一定要有理想，它是职业道路的指明灯，在迷茫的时候指引你前行。\n\n" +
+                  "独立思维的重要性。独立思维是一个以自我中心的思考方式，人类文明的发展在于交流，语言、文字、书籍等这些都是人类交流的方式，如果人人都具备很强的独立思维那么人与人之间就难以交流也不会进步，所以这也注定了大部分人的独立思维是较弱的，他们的认知都是从他人中学来。\n\n" +
+                  "不要把自我麻痹当成是心态好。有的人亏多了就不会对亏损产生任何不快的感觉了，这是适应性的表现，人的大脑中有一种调节机制，它会让人更好地适应新的环境，也可以说是自我麻痹。\n\n" +
+                  "借钱不适用于短线操作。一是短线操作本身就是高风险高收益的方式，水平到位资金增长是很快的，如果再去加大资金，那么风险和收益两者都会同时放大，这是相当于拿了一把刀架在自己脖子上；二是在操作的时候心态会把控不好，会畏首畏尾，买完之后会处于紧张担忧的状态之中，这是对自己的精神折磨；三是大部分人不知道收手，不要妄想自己赚了之后就还钱，这是不可能的，因为赚钱之后的那种自信会让预期和目标放得更大。\n\n" +
+                  "时间是有价值的，要衡量自己的时间到底值多少钱，再来确定做一件事值不值得，比如你会利用空闲时间去做兼职吗，兼职的价格是多少，低于这个价位就不会去做了。可是很多时候人们却做出自相矛盾的事，比如要买一个东西，这个东西一般卖120元，而你曾经在某个地方看到这个东西卖100元，于是为了找到这家店花费了半天时间只为了省20块，如果你用这半天时间去做其他的活肯定不止赚20块。\n\n" +
+                  "对自己太认可，太急功近利，我认为这次肯定会赚，所以我必须打满，不打满就好比亏钱了。\n1、如果停牌了怎么办？我从来没有想过自己的股票会停牌，我觉得这不会发生在我身上。事实上，如果停牌了，我将没有任何资金可以操作。\n不愿意，但我觉得这种可能性很小。事实上，这种情况发生的概率很大，抛硬币时连续5次出现同一面的情况常有发生，资金回撤50%需要盈利100%才能回到原点，发生这种情况除了扰乱心态之外，还会浪费很多时间。\n3、当有一个更好的标的出现时你会马上卖了去买吗？如果去，你愿意承受左右打脸的结局吗，如果不去，你会为错失机会而遗憾吗？以前可能会去，现在很少了，错过了会有遗憾。有遗憾就说明了内心的不甘心，觉得这原本能赚的钱却没赚到，可能会为了挽回局面而进行随意操作，这是一种不良心态，而解决这一局面的方法就是分仓。\n4、你当天买入的股票被套，而之后出现很多机会可是你却没资金买入了，你内心会有什么感想？会懊恼，解决方法，分仓。\n因为我看到很多高手都是全仓打板一个股，所以我觉得要成为高手应该也是全仓买入一个股，另外一个我觉得股票太多了可能会忙不过来。事实上是不是高手与分仓和全仓毫无关联，这是我在新手时期造成的一种误解，这个误解没有消除就形成了一种记性，记性慢慢就变成了定性思维；至于忙不过来，短线操作两个票绝对没有一点问题。\n6、操作时你能保持一种客观态度吗？比较难，常常会失去理智，全仓操作单个票的盈利大，亏损大，适用于成功率非常高的股票，分仓单个票的盈利小，风险分摊，适用于较高成功率的股，所以全仓还是分仓在于买入标的的确定性有多大，而高成功率的标的是很少出现的，每天满仓必然是错误的；无法保持一种客观态度，从主观上增加成功率，这是好胜心、自信心过重导致的，除了调节自己的主观情绪外，还要加深对成功率的判断能力。\n7、全仓操作是如何影响我生活的？因为这是我的全部家当，所以我必定会重视它，一是我担心它会出现什么意外，二是我会满心期待，所以我的情绪就徘徊在焦虑和期待之中，这两种情绪都会使肾上腺激素上升，心跳加快，所以很难睡个安稳觉，而一旦睡眠不好各种问题就会接踵而来，思维能力、工作效率、精力大幅下降，情绪焦躁和低落，白天黑夜颠倒，失去正常生活节奏，与人交往过少，便会产生孤独感，久而久之可能会对生活失去欲望。\n\n" +
+                  "“牛市来了”这句话是短线的毒药。市场上有那么一群人他们喜欢熊市，因为熊市强势个股较少，一览无余，很清楚自己要做什么，而牛市满屏的涨停板，鱼目混珠，没有明确的目标，犯错的几率反而大。另一个，当你知道这是牛市时你会放大自己收益预期，觉得一个月至少赚30%才得是牛市，而赚得少则会产生低落情绪，随意操作盲目换股就来了，熊市则会放低自己预期，出手更加谨慎，就算偶尔亏损也不会影响自己的心态。\n短线，牛市与熊市的区别是，牛市机会多，熊市机会少，确定性与牛熊无关，对于每天全仓操作的人来说那更加没有关系了，不管牛熊基本每天都有机会可以操作，所以一天10个机会跟一天一个机会没有区别。\n\n" +
+                  "股市就是教大家如何认识自己，去做自己最擅长的东西。但是大家好像就是喜欢听别人讲一些技术买卖逻辑，这些东西谁都可以知道。"
+              }
+            ]
+          },
           {
             id: "0xsun",
             name: "0xSun",
@@ -6483,187 +6486,6 @@
           fpRoute();
         }
 
-        /* ---------- 三链日报：现拉 DefiLlama，只呈现三样：昨日总量、9 月峰值占比、主要发射台费用 24h ----------
-           每条链独立拉取、独立计算、独立渲染：一条失败只坏自己那张卡，不影响其他卡片和页面。
-           发射台费用单独从费用总览拉取，与交易量互不影响：费用拉不到时只隐藏费用行。
-           可信量仍按原来的三道核对在后台算（日柱完整性、单协议异常剔除、数值卡住标记），
-           页面只显示算完的结果，不显示核对过程。外部数据一律走 textContent 写入。 */
-        var CHAIN_REPORT = [
-          { api: "Solana", label: "SOL" },
-          { api: "BSC", label: "BSC" },
-          { api: "Robinhood", label: "Robinhood" }
-        ];
-        var CHAIN_PEAK_MONTH = "2026-09";
-
-        function chainYi(v) { return "$" + (v / 1e8).toFixed(2) + " 亿"; }
-        function chainDayStr(ts) {
-          var d = new Date(ts * 1000);
-          var m = d.getUTCMonth() + 1, day = d.getUTCDate();
-          return d.getUTCFullYear() + "-" + (m < 10 ? "0" : "") + m + "-" + (day < 10 ? "0" : "") + day;
-        }
-        function chainUtcDate(daysAgo) {
-          var n = new Date();
-          return chainDayStr(Math.floor(Date.UTC(n.getUTCFullYear(), n.getUTCMonth(), n.getUTCDate() - daysAgo) / 1000));
-        }
-        /* 发射台费用：固定名单，不按费用排名、不显示名单外条目。
-           从费用总览的 protocols 数组里只在 category 为 Launchpad 的条目里按名匹配：
-           Solana 只取 pump.fun；BSC 只取 Flap（接口名 "Flap sh"）与 four.meme；
-           Robinhood 只取 Pons（"Pons V1" + "Pons V2" 合并相加）。
-           名单里缺失或为 0 的跳过，全缺时整行隐藏；金额按「万」美元显示 */
-        var CHAIN_LAUNCH_LIST = {
-          "Solana": [
-            { display: "pump.fun", names: ["pump.fun"] }
-          ],
-          "BSC": [
-            { display: "Flap", names: ["Flap sh", "Flap"] },
-            { display: "four.meme", names: ["four.meme"] }
-          ],
-          "Robinhood": [
-            { display: "Pons", names: ["Pons V1", "Pons V2"] }
-          ]
-        };
-        function chainWan(v) {
-          var w = v / 1e4;
-          return w >= 10 ? "$" + Math.round(w) + "万" : "$" + w.toFixed(1) + "万";
-        }
-        function chainLaunchFees(data, chainApi) {
-          var list = CHAIN_LAUNCH_LIST[chainApi] || [];
-          if (!list.length) return [];
-          var totals = {};
-          (data.protocols || []).forEach(function (p) {
-            if (!p || p.category !== "Launchpad") return;
-            var v = p.total24h;
-            if (!v || v <= 0) return;
-            for (var i = 0; i < list.length; i++) {
-              if (list[i].names.indexOf(p.name) !== -1) {
-                totals[list[i].display] = (totals[list[i].display] || 0) + v;
-                break;
-              }
-            }
-          });
-          var out = [];
-          list.forEach(function (it) {
-            var v = totals[it.display];
-            if (v && v > 0) out.push(it.display + " " + chainWan(v));
-          });
-          return out;
-        }
-        function chainRenderFees(card, items) {
-          var launch = card.querySelector('[data-role="launch"]');
-          if (!launch) return;
-          launch.textContent = items && items.length ? "发射台费用 24h：" + items.join(" · ") : "";
-        }
-        function chainAnalyze(data) {
-          var bars = {}, breakdown = {}, i;
-          var chart = data.totalDataChart || [];
-          for (i = 0; i < chart.length; i++) bars[chainDayStr(chart[i][0])] = chart[i][1];
-          var bd = data.totalDataChartBreakdown || [];
-          for (i = 0; i < bd.length; i++) {
-            var flat = {}, m = bd[i][1] || {};
-            for (var proto in m) {
-              if (!Object.prototype.hasOwnProperty.call(m, proto)) continue;
-              var v = m[proto];
-              if (v !== null && typeof v === "object") {
-                var s = 0;
-                for (var k in v) { if (Object.prototype.hasOwnProperty.call(v, k)) s += v[k]; }
-                flat[proto] = s;
-              } else { flat[proto] = v; }
-            }
-            breakdown[chainDayStr(bd[i][0])] = flat;
-          }
-          var yday = chainUtcDate(1), dbefore = chainUtcDate(2), tday = chainUtcDate(0);
-          var barY = bars[yday], barB = bars[dbefore], barT = bars[tday];
-          var roll24 = data.total24h;
-          if (barY === undefined || barY === null) {
-            return { missing: true, yday: yday };
-          }
-          /* 核对一（后台）：昨日日柱不完整 → 可信量改用滚动 24 小时 */
-          var incomplete = false;
-          if (barT !== undefined && barT !== null && barT > barY) incomplete = true;
-          if (roll24 && barY < roll24 * 0.7) incomplete = true;
-          /* 核对二（后台）：单协议异常暴涨 → 从可信量中剔除；核对三（数值卡住）只作内部标记，不影响可信量 */
-          var bdY = breakdown[yday] || {}, bdB = breakdown[dbefore] || {}, bdT = breakdown[tday] || {};
-          var suspectSum = 0;
-          for (var p in bdY) {
-            if (!Object.prototype.hasOwnProperty.call(bdY, p)) continue;
-            var vY = bdY[p], vB = bdB[p] || 0, vT = bdT[p];
-            if (vT !== undefined && vY >= barY * 0.1 && Math.abs(vT - vY) < 1) { /* 数值卡住：内部标记，不展示 */ }
-            if (vB > 0 && vY >= barY * 0.25 && vY > vB * 5 && (vY - vB) > 1e8) suspectSum += vY;
-          }
-          var trusted;
-          if (incomplete && roll24) trusted = roll24;
-          else if (suspectSum > 0) trusted = barY - suspectSum;
-          else trusted = barY;
-          var peakDay = null, peakVal = 0;
-          for (var d in bars) {
-            if (!Object.prototype.hasOwnProperty.call(bars, d)) continue;
-            if (d.indexOf(CHAIN_PEAK_MONTH) === 0 && bars[d] > peakVal) { peakDay = d; peakVal = bars[d]; }
-          }
-          return {
-            missing: false, yday: yday, trusted: trusted,
-            peakDay: peakDay, peakVal: peakVal,
-            pct: peakVal ? Math.round(trusted / peakVal * 100) : null
-          };
-        }
-        function chainRender(card, res) {
-          var vol = card.querySelector('[data-role="vol"]');
-          var pct = card.querySelector('[data-role="pct"]');
-          var date = card.querySelector('[data-role="date"]');
-          if (date) date.textContent = "昨日 " + res.yday;
-          if (res.missing) {
-            vol.textContent = "暂无数据";
-            pct.textContent = "";
-            return;
-          }
-          vol.textContent = chainYi(res.trusted);
-          pct.textContent = res.pct !== null ? "约 9 月峰值的 " + res.pct + "%" : "";
-        }
-        function chainRenderError(card) {
-          var vol = card.querySelector('[data-role="vol"]');
-          var pct = card.querySelector('[data-role="pct"]');
-          if (vol) vol.textContent = "数据暂时拉不到";
-          if (pct) pct.textContent = "";
-        }
-        function initChainReport() {
-          var upd = $("chainUpdated");
-          if (upd) {
-            try {
-              var parts = new Intl.DateTimeFormat("zh-CN", { timeZone: "Asia/Shanghai", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hour12: false }).formatToParts(new Date());
-              var o = {};
-              parts.forEach(function (pt) { o[pt.type] = pt.value; });
-              upd.textContent = "更新于 " + o.year + "-" + o.month + "-" + o.day + " " + o.hour + ":" + o.minute + "（北京时间）";
-            } catch (e) {
-              upd.textContent = "更新于 " + new Date().toLocaleString("zh-CN") + "（北京时间）";
-            }
-          }
-          CHAIN_REPORT.forEach(function (c) {
-            var card = document.querySelector('[data-chain="' + c.api + '"]');
-            if (!card) return;
-            if (!window.fetch) { chainRenderError(card); return; }
-            window.fetch("https://api.llama.fi/overview/dexs/" + encodeURIComponent(c.api) + "?dataType=dailyVolume")
-              .then(function (r) {
-                if (!r.ok) throw new Error("http " + r.status);
-                return r.json();
-              })
-              .then(function (data) {
-                try { chainRender(card, chainAnalyze(data)); }
-                catch (e) { chainRenderError(card); }
-              })
-              .catch(function () { chainRenderError(card); });
-            /* 发射台费用独立拉取：失败或没有发射台条目时只隐藏费用行，不影响卡片其余部分 */
-            window.fetch("https://api.llama.fi/overview/fees/" + encodeURIComponent(c.api) + "?dataType=dailyFees&excludeTotalDataChart=true&excludeTotalDataChartBreakdown=true")
-              .then(function (r) {
-                if (!r.ok) throw new Error("http " + r.status);
-                return r.json();
-              })
-              .then(function (data) {
-                try { chainRenderFees(card, chainLaunchFees(data, c.api)); }
-                catch (e) { chainRenderFees(card, null); }
-              })
-              .catch(function () { chainRenderFees(card, null); });
-          });
-        }
-
         /* 每个初始化各自兜底：任何一个动效出问题，都不能连累卡片显示和合集打开 */
         function safeInit(fn) { try { fn(); } catch (e) { /* 静默跳过坏掉的单个动效 */ } }
         safeInit(initReveal);
@@ -6672,7 +6494,6 @@
         safeInit(initTilt);
         safeInit(initThemeToggle);
         safeInit(initFupan);
-        safeInit(initChainReport);
       })();
     </script>
   </body>
